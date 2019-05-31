@@ -1,0 +1,24 @@
+# Unity generated #
+Temp/
+Library/
+ProjectSettings/ProjectVersion.txt
+
+# Visual Studio / MonoDevelop generated #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+/*.log
+*.pidb
+*.suo
+/*.sln
+*.user
+*.unityproj
+*.booproj
+*.zip
+
+# IntelliJ IDEA generated #
+.idea
+# Visual Studio generated #
+.vs
