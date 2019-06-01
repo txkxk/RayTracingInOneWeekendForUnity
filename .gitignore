@@ -3,6 +3,7 @@ Temp/
 Library/
 Packages/
 UnityPackageManager/
+ProjectSettings/PresetManager.asset
 ProjectSettings/ProjectVersion.txt
 
 # Visual Studio / MonoDevelop generated #
