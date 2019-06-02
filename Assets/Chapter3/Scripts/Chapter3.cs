@@ -26,14 +26,16 @@ namespace Chapter3
 
         void Draw()
         {
-            for(int x = 0;x<Screen.width;x++)
+            Ray r = new Ray();
+            r.origin = origin;
+            for (int x = 0; x < Screen.width; x++)
             {
-                for(int y=0;y<Screen.height;y++)
+                for (int y = 0; y < Screen.height; y++)
                 {
                     float u = (float)x / (float)Screen.width;
                     float v = (float)y / (float)Screen.height;
 
-                    Ray r = new Ray(origin, lower_left_corner + u * horizontal + v * vertical);
+                    r.direction = lower_left_corner + u * horizontal + v * vertical;
                     DrawScreen.instance.SetPixel(x, y, color(r));
                 }
             }
