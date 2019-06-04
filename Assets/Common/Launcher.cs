@@ -9,6 +9,8 @@ public class Launcher : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         tex2D = new Texture2D(Screen.width, Screen.height);
+        tex2D.filterMode = FilterMode.Trilinear;
+        tex2D.wrapMode = TextureWrapMode.Clamp;
         image.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         image.texture = tex2D;
         DrawScreen.instance.SetTexture(tex2D);

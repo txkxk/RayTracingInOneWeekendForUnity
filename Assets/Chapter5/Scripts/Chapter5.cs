@@ -14,7 +14,6 @@ public class Chapter5 : MonoBehaviour
 
     public Vector3 sphereCenter = new Vector3(0, 0.2f, -1f);
     public float radius = 0.5f;
-    public Color ballColor = Color.red;
     void Start()
     {
         Draw();

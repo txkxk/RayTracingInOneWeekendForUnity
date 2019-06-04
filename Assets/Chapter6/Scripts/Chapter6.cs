@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chapter5_1 : MonoBehaviour {
+public class Chapter6 : MonoBehaviour {
 
     RaycastHit rh;
     Color c1 = Color.white;
@@ -18,17 +18,25 @@ public class Chapter5_1 : MonoBehaviour {
     public float radius2 = 100f;
     float t_min = 0;
     float t_max = float.MaxValue;
+    public int AntialiasLevel = 50;
     HitableList world = new HitableList();
     Sphere s1;
     Sphere s2;
 
+    Camera cam;
+
 
     void Start()
     {
+        //采样次数至少为1
+        AntialiasLevel = System.Math.Max(1, AntialiasLevel);
+
         s1 = new Sphere(sphereCenter1, radius1);
         s2 = new Sphere(sphereCenter2, radius2);
         world.list.Add(s1);
         world.list.Add(s2);
+
+        cam = new Camera(lower_left_corner, horizontal, vertical, origin);
 
         Draw();
     }
@@ -36,9 +44,9 @@ public class Chapter5_1 : MonoBehaviour {
     Color color(Ray r)
     {
         RaycastHit rh = new RaycastHit();
-        if (world.Hit(r,t_min,t_max,ref rh))
+        if (world.Hit(r, t_min, t_max, ref rh))
         {
-            return new Color((rh.normal.x + 1f) * 0.5f, (rh.normal.y + 1f) * 0.5f, (rh.normal.z + 1f) * 0.5f) ;//把范围映射到0-1
+            return new Color((rh.normal.x + 1f) * 0.5f, (rh.normal.y + 1f) * 0.5f, (rh.normal.z + 1f) * 0.5f);//把范围映射到0-1
         }
         Vector3 unit_direction = r.direction.normalized;
         float t = 0.5f * (unit_direction.y + 1f);
@@ -47,17 +55,22 @@ public class Chapter5_1 : MonoBehaviour {
 
     void Draw()
     {
-        Ray r = new Ray();
-        r.origin = origin;
         for (int x = 0; x < Screen.width; x++)
         {
             for (int y = 0; y < Screen.height; y++)
             {
-                float u = (float)x / (float)Screen.width;
-                float v = (float)y / (float)Screen.height;
+                Color c = new Color();
+                for(int s = 0;s<AntialiasLevel;s++)
+                {
+                    float u = (x + Random.Range(0f, 1f - float.Epsilon)) / (float)Screen.width;
+                    float v = (y + Random.Range(0f, 1f - float.Epsilon)) / (float)Screen.height;
+                    Ray r = cam.GetRay(u, v);
+                    c += color(r);
+                }
 
-                r.direction = lower_left_corner + u * horizontal + v * vertical;
-                DrawScreen.instance.SetPixel(x, y, color(r));
+                c /= AntialiasLevel;
+
+                DrawScreen.instance.SetPixel(x, y, c);
             }
         }
         DrawScreen.instance.Draw();
