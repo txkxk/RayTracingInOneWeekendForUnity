@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chapter6 : MonoBehaviour {
+public class Chapter6MulThread : MonoBehaviour {
 
     RaycastHit rh;
     Color c1 = Color.white;
@@ -23,8 +23,9 @@ public class Chapter6 : MonoBehaviour {
     Sphere s1;
     Sphere s2;
 
-    Camera cam;
+    public Camera cam;
 
+    bool threadFinish = false;
 
     void Start()
     {
@@ -38,10 +39,12 @@ public class Chapter6 : MonoBehaviour {
 
         cam = new Camera(lower_left_corner, horizontal, vertical, origin);
 
+        ThreadMain.instance.main = this;
+
         Draw();
     }
 
-    Color color(Ray r)
+    public Color color(Ray r)
     {
         RaycastHit rh = new RaycastHit();
         if (world.Hit(r, t_min, t_max, ref rh))
@@ -53,28 +56,38 @@ public class Chapter6 : MonoBehaviour {
         return Color.Lerp(c1, c2, t);
     }
 
-    System.Random random = new System.Random();
-
     void Draw()
     {
         for (int x = 0; x < Screen.width; x++)
         {
             for (int y = 0; y < Screen.height; y++)
             {
-                Color c = new Color();
-                for(int s = 0;s<AntialiasLevel;s++)
-                {
-                    float u = (x + (float)random.NextDouble()) / (float)Screen.width;
-                    float v = (y + Random.Range(0f, 1f - float.Epsilon)) / (float)Screen.height;
-                    Ray r = cam.GetRay(u, v);
-                    c += color(r);
-                }
+                ThreadMain.instance.AddTask(x, y);
+            }
+        }
 
-                c /= AntialiasLevel;
+        Debug.Log("AddTaskFinish");
+        ThreadMain.instance.Run(() => {
+            threadFinish = true;
+            Debug.Log("Finish");
+        });
 
+        StartCoroutine(WaitForThread());
+    }
+
+    IEnumerator WaitForThread()
+    {
+        yield return new WaitUntil(() => threadFinish);
+
+        for (int x = 0; x < Screen.width; x++)
+        {
+            for (int y = 0; y < Screen.height; y++)
+            {
+                Color c = ThreadMain.instance.pic[x, y];
                 DrawScreen.instance.SetPixel(x, y, c);
             }
         }
+
         DrawScreen.instance.Draw();
     }
 }

@@ -539,5 +539,4 @@ MonoBehaviour:
   radius1: 0.5
   sphereCenter2: {x: 0, y: -100.5, z: -1}
   radius2: 100
-  AntialiasLevel: 2
-  ballColor: {r: 1, g: 0, b: 0, a: 1}
+  AntialiasLevel: 50
