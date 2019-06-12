@@ -532,12 +532,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1959738001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d2f2b921f218024686672136ea1dbd6, type: 3}
+  m_Script: {fileID: 11500000, guid: e330fb96c688c7444b313ad5c4e27ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sphereCenter1: {x: 0, y: 0, z: -1}
   radius1: 0.5
   sphereCenter2: {x: 0, y: -100.5, z: -1}
-  radius2: 100
-  AntialiasLevel: 50
+  radius2: 99.7
+  sphereCenter3: {x: 1, y: 0, z: -1}
+  radius3: 0.5
+  sphereCenter4: {x: -1, y: 0, z: -1}
+  radius4: 0.5
+  AntialiasLevel: 10
   atten: 0.5

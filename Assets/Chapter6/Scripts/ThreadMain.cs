@@ -23,10 +23,7 @@ public class ThreadMain
 
     System.Random random = new System.Random();
 
-    System.Action finishCallBack;
     List<Task> taskList = new List<Task>();
-    List<Thread> threadList = new List<Thread>();
-    int threadNum;
     public Color[,] pic = new Color[1000, 500];
 
     public void AddTask(int x, int y)

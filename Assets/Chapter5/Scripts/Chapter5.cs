@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Chapter5 : MonoBehaviour
 {
-    RaycastHit rh;
     Color c1 = Color.white;
     Color c2 = new Color(0.5f, 0.7f, 1.0f);
     Vector3 lower_left_corner = new Vector3(-2f, -1f, -1f);

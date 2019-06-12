@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Chapter6MulThread : MonoBehaviour {
 
-    RaycastHit rh;
     Color c1 = Color.white;
     Color c2 = new Color(0.5f, 0.7f, 1.0f);
     Vector3 lower_left_corner = new Vector3(-2f, -1f, -1f);
@@ -34,8 +33,8 @@ public class Chapter6MulThread : MonoBehaviour {
 
         s1 = new Sphere(sphereCenter1, radius1);
         s2 = new Sphere(sphereCenter2, radius2);
-        world.list.Add(s1);
-        world.list.Add(s2);
+        world.AddHitable(s1);
+        world.AddHitable(s2);
 
         cam = new Camera(lower_left_corner, horizontal, vertical, origin);
 
