@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chapter8 : MonoBehaviour {
+public class Chapter8 : MonoBehaviour
+{
 
     Color c1 = Color.white;
     Color c2 = new Color(0.5f, 0.7f, 1.0f, 1.0f);
@@ -34,9 +35,9 @@ public class Chapter8 : MonoBehaviour {
         //采样次数至少为1
         AntialiasLevel = Math.Max(1, AntialiasLevel);
 
-        Sphere s1 = new Sphere(sphereCenter1, radius1,new Lambertian(new Color(0.8f,0.3f,0.3f)));
-        Sphere s2 = new Sphere(sphereCenter2, radius2, new Lambertian(new Color(0.8f, 0.8f, 0.0f)));
-        Sphere s3 = new Sphere(sphereCenter3, radius3, new Metal(new Color(0.8f, 0.6f, 0.2f)));
+        Sphere s1 = new Sphere(sphereCenter1, radius1, new Metal(new Color(0.8f, 0.3f, 0.3f), 0.2f));
+        Sphere s2 = new Sphere(sphereCenter2, radius2, new Metal(new Color(0.8f, 0.8f, 0.0f)));
+        Sphere s3 = new Sphere(sphereCenter3, radius3, new Metal(new Color(0.8f, 0.6f, 0.2f), 0.7f));
         Sphere s4 = new Sphere(sphereCenter4, radius4, new Metal(new Color(0.8f, 0.8f, 0.8f)));
         world.AddHitable(s1);
         world.AddHitable(s2);
@@ -49,7 +50,7 @@ public class Chapter8 : MonoBehaviour {
 
     }
 
-    Color color(Ray r, Hitable world,int depth)
+    Color color(Ray r, Hitable world, int depth)
     {
         //RaycastHit rh = new RaycastHit();
         HitRecord hr = new HitRecord();
@@ -57,7 +58,7 @@ public class Chapter8 : MonoBehaviour {
         {
             Ray scattered;
             Color attenuation;
-            if(depth <50 && hr.material.scatter(r,ref hr,out attenuation,out scattered))
+            if (depth < 50 && hr.material.scatter(r, ref hr, out attenuation, out scattered))
             {
                 return attenuation * color(scattered, world, depth + 1);
             }
@@ -87,7 +88,7 @@ public class Chapter8 : MonoBehaviour {
                     float u = (x + (float)Common.random.NextDouble()) / Screen.width;
                     float v = (y + (float)Common.random.NextDouble()) / Screen.height;
                     Ray r = cam.GetRay(u, v);
-                    c += color(r, world,0);
+                    c += color(r, world, 0);
                 }
 
                 c /= AntialiasLevel;
