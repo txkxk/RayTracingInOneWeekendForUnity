@@ -81,9 +81,9 @@ public class Chapter7 : MonoBehaviour {
 
                 c /= AntialiasLevel;
                 //模拟gamma校正
-                c.r = Mathf.Sqrt(c.r);
-                c.g = Mathf.Sqrt(c.g);
-                c.b = Mathf.Sqrt(c.b);
+                c.r = Mathf.LinearToGammaSpace(c.r);
+                c.g = Mathf.LinearToGammaSpace(c.g);
+                c.b = Mathf.LinearToGammaSpace(c.b);
                 DrawScreen.instance.SetPixel(x, y, c);
             }
         }

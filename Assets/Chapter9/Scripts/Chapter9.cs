@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Chapter8 : MonoBehaviour
-{
+public class Chapter9 : MonoBehaviour {
     Color c1 = Color.white;
     Color c2 = new Color(0.5f, 0.7f, 1.0f, 1.0f);
     Vector3 lower_left_corner = new Vector3(-2f, -1f, -1f);
@@ -20,6 +19,8 @@ public class Chapter8 : MonoBehaviour
     public float radius3 = 0.5f;
     public Vector3 sphereCenter4 = new Vector3(-1f, 0, -1f);
     public float radius4 = 0.5f;
+    public Vector3 sphereCenter5 = new Vector3(-1f, 0, -1f);
+    public float radius5 = -0.45f;
     float t_min = 0.001f;
     float t_max = float.MaxValue;
     public int AntialiasLevel = 50;
@@ -34,14 +35,16 @@ public class Chapter8 : MonoBehaviour
         //采样次数至少为1
         AntialiasLevel = Math.Max(1, AntialiasLevel);
 
-        Sphere s1 = new Sphere(sphereCenter1, radius1, new Metal(new Color(0.8f, 0.3f, 0.3f), 0.2f));
-        Sphere s2 = new Sphere(sphereCenter2, radius2, new Metal(new Color(0.8f, 0.8f, 0.0f)));
+        Sphere s1 = new Sphere(sphereCenter1, radius1, new Lambertian(new Color(0.1f, 0.2f, 0.5f)));
+        Sphere s2 = new Sphere(sphereCenter2, radius2, new Lambertian(new Color(0.8f, 0.8f, 0.0f)));
         Sphere s3 = new Sphere(sphereCenter3, radius3, new Metal(new Color(0.8f, 0.6f, 0.2f)));
-        Sphere s4 = new Sphere(sphereCenter4, radius4, new Metal(new Color(0.8f, 0.8f, 0.8f),0.1f));
+        Sphere s4 = new Sphere(sphereCenter4, radius4, new Dielectric(1.5f));
+        Sphere s5 = new Sphere(sphereCenter5, radius5, new Dielectric(1.5f));
         world.AddHitable(s1);
         world.AddHitable(s2);
         world.AddHitable(s3);
         world.AddHitable(s4);
+        world.AddHitable(s5);
 
         cam = new Camera(lower_left_corner, horizontal, vertical, origin);
 
